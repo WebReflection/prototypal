@@ -7,11 +7,15 @@
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta names="apple-mobile-web-app-status-bar-style" content="black"/>
         <script>
+        'getOwnPropertyDescriptor' in Object ||
+        document.write('<script src="test/es5.js"><' + '/script>');
+        </script>
+        <script>
         // here the list of tests to run with wru
         var TESTS = ["prototypal"];
         </script>
         <script>// don't change code here
-        for(var i = 0; i < TESTS.length; ++i && document.write('<script src="build/' + TESTS + '.js"><' + '/script>'));
+        for(var i = 0; i < TESTS.length; ++i && document.write('<script src="build/' + TESTS + '.max.js?' + Math.random() + '"><' + '/script>'));
         function wru(wru){
           var
             all = [],
@@ -36,7 +40,7 @@
             )(wru);
           }
           this.onload = function () {
-            for(var i = 0; i < TESTS.length; load('test/' + TESTS[i++] + '.js'));
+            for(var i = 0; i < TESTS.length; load('test/' + TESTS[i++] + '.js?' + Math.random()));
             wru.test = test;
             wru.test(all);
           };

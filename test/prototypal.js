@@ -2,11 +2,14 @@
 var Class = require('../build/prototypal.node.js').Class;
 //:remove
 
+function compareProperty(name, a, b) {
+  return a.hasOwnProperty(name) && b.hasOwnProperty(name) && a[name] === b[name];
+}
 function compare(a, b) {
   return (
-    a.writable && b.writable &&
-    a.configurable && b.configurable &&
-    !a.enumerable && !b.enumerable
+    compareProperty('writable', a, b) &&
+    compareProperty('configurable', a, b) &&
+    compareProperty('enumerable', a, b)
   );
 }
 
