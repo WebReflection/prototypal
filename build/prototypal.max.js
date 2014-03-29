@@ -40,7 +40,9 @@ var Class = function(Object){'use strict';
     hasOwnProperty = Object.prototype.hasOwnProperty,
     keys = Object.keys,
     i = 0,
-    tmp, compat, notIE9
+    hasConfigurableBug,
+    hasNotOwnPropertyBug,
+    tmp
   ;
   function Bound(callback) {
     this._ = callback;
@@ -93,13 +95,13 @@ var Class = function(Object){'use strict';
           return c || callback;
         }
         // Android 2.x and webOS 2 bug only
-        if (compat) {
+        if (hasConfigurableBug) {
           while (!desc && (proto = getPrototypeOf(proto))) {
             desc = getOwnPropertyDescriptor(proto, k);
           }
           delete proto[k];
         }
-        if (notIE9 || !getOwnPropertyDescriptor(self, k)) {
+        if (hasNotOwnPropertyBug || !hasOwnProperty.call(self, k)) {
           // redefine as configurable to be able later on
           // to delete it again
           defineProperty(self, k, {
@@ -108,7 +110,7 @@ var Class = function(Object){'use strict';
           });
         }
         // still Android 2.x and webOS 2 only
-        if (compat) {
+        if (hasConfigurableBug) {
           defineProperty(proto, k, desc);
         }
         return self[k];
@@ -157,11 +159,11 @@ var Class = function(Object){'use strict';
     return defineProperty(this,'_',{value:false})._;
   }}));
   try {
-    compat = tmp._ || tmp._;
+    hasConfigurableBug = tmp._ || tmp._;
   } catch(e) {
-    compat = true;
+    hasConfigurableBug = true;
   }
-  notIE9 = i === 1; // seriously !!!
+  hasNotOwnPropertyBug = 1 === i; // seriously !!!
   return defineProperties(Class, {
     Class: {value: Class},
     bound: {value: function (callback) {
