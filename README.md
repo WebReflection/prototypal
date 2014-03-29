@@ -171,6 +171,8 @@ document.body.addEventListener('click', mh.onClick);
   * Firefox and Firefox Mobile or FirefoxOS
   * Chrome
   * Safari and Safari Mobile in iOS5+
+  * UC Browser
+  * Nokia Xpress (Asha and WP)
 
 **Server**
   * node.js, travis builds on 0.8 and higher, might work on 0.6 too
