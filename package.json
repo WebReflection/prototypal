@@ -1,13 +1,22 @@
 {
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "name": "prototypal",
-  "description": "",
+  "description": "modern JS inheritance done right",
   "homepage": "https://github.com/WebReflection/prototypal",
-  "keywords": [],
+  "keywords": [
+    "prototypal",
+    "inheritance",
+    "descriptors",
+    "ES5",
+    "ES5.1",
+    "cross",
+    "browser",
+    "platform"
+  ],
   "author": {
-    "name": "",
-    "web": ""
+    "name": "Andrea Giammarchi",
+    "web": "http://webreflection.blogspot.com/"
   },
   "repository": {
     "type": "git",
@@ -17,7 +26,7 @@
   "scripts": {
     "test": "node test/.test.js"
   },
-  "dependencies": {
+  "devDendencies": {
     "wru": ">= 0.0.0"
   }
 }
