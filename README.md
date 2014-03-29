@@ -109,7 +109,7 @@ var Person = Class({
   // here an example of ..
   //   . something maybe not needed right on
   //   . something not always accessed
-  //   . somethong expensive to computate
+  //   . something expensive to compute
   // once computed there is no need
   // to compute it again so it should
   // rather be a property than a method
