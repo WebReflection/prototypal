@@ -162,6 +162,8 @@ document.body.addEventListener('click', mh.onClick);
 
 
 ### Compatibility
+If your browser is not in this list, feel free to [test online](http://webreflection.github.io/prototypal/test/) and verify it's green.
+
 **Browsers**
   * Opera Desktop, Opera Mobile, and Opera Mini if using [es5-shim and es5-sham](./test/es5.js) upfront
   * WebKit Android 2+
