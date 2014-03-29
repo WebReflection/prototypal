@@ -1,0 +1,14 @@
+{
+    "name": "prototypal",
+    "description": "modern JS inheritance done right",
+    "version": "0.1.0",
+    "main": "build/prototypal.amd.js",
+    "ignore": [
+        "test",
+        "node_modules",
+        "src",
+        "template",
+        "index.html",
+        "Makefile"
+    ]
+}
