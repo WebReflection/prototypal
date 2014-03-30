@@ -9,6 +9,14 @@ This is the result of a "_tour de force_" out of 4 blog posts about [ECMAScript 
 
 It has been simplified as much as possible and it's a lightweight replacement for an older [redefine.js](https://github.com/WebReflection/redefine#redefinejs) proposal, fitting in about 700bytes minzipped and solving in its core a lot of problems that older, as well as modern Desktop or Mobile browsers, introduced in these days web development.
 
+#### How
+`npm install prototypal` then `require('prototypal').Class` or just the module would do.
+
+Same is for `bower install prototypal` AMD module, however needed files are:
+
+  * [minified cross platform](build/prototypal.js) for the `Class` variable only instead of a module
+  * [AMD module](build/prototypal.amd.js) minified, for your AMD logic
+  * [node.js module](build/prototypal.node.js) for node
 
 ### prototypal.Class
 The **API** is straight forward, `Class({ .. properties .. })` or `Class(extend, { .. properties .. })`, where `extend` can be either `null`, any `object`, or simply a `Function` where in latter case its prototype will be automatically used to chain inheritance.
