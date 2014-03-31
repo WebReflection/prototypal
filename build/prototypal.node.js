@@ -23,6 +23,7 @@ THE SOFTWARE.
 module.exports = function(Object){'use strict';
   /*! (C) Andrea Giammarchi - MIT Style License */
   var
+    CONSTRUCTOR = 'constructor',
     // bind is the only method here that might be missing
     // in ES5 capable browsers, from Android 2 to iOS 5
     bind = Object.bind || function (o, c) {
@@ -91,7 +92,7 @@ module.exports = function(Object){'use strict';
         // the whole aim of this Class.js is to avoid dealing directly
         // with the constructor, which means only prototype
         // should have constructor as own property, never instances
-        if (hasOwnProperty.call(self, 'constructor')) {
+        if (hasOwnProperty.call(self, CONSTRUCTOR)) {
           return c || callback;
         }
         // Android 2.x and webOS 2 bug only
@@ -142,16 +143,19 @@ module.exports = function(Object){'use strict';
           d = extending ? descriptors : proto
         ).reduce(descriptify, d),
         constructor = (
-          hasOwnProperty.call(d, 'constructor') ?
-          d.constructor :
-          d.constructor = defaults(function Class(){})
+          hasOwnProperty.call(d, CONSTRUCTOR) ?
+          d[CONSTRUCTOR] :
+          defineProperty(d, CONSTRUCTOR, {
+            enumerable: true,
+            value: defaults(function Class(){})
+          })[CONSTRUCTOR]
         ).value;
     return (extending ?
       (constructor.prototype = create(
         typeof proto === 'function' ?
           proto.prototype : proto, d)) :
       defineProperties(constructor.prototype, d)
-    ).constructor;
+    )[CONSTRUCTOR];
   }
   // Android 2.x and webOS 2 bug only
   tmp = create(defineProperty({},'_',{get:function(){
