@@ -38,192 +38,57 @@
 
 <p><a href="./LICENSE.txt">Mit Style License</a></p>
 
-<p>This is the result of a "<em>tour de force</em>" out of 4 blog posts about <a href="http://webreflection.blogspot.com/2014/03/what-books-wont-tell-you-about-es5.html">ECMAScript 5 Descriptors</a> and probably the most compatible <code>Class</code> solution entirely based on ES5 Standards you can find these days.</p>
+<h5>
+<a name="where-is-class-" class="anchor" href="#where-is-class-"><span class="octicon octicon-link"></span></a>Where is Class ?</h5>
 
-<p>It has been simplified as much as possible and it's a lightweight replacement for an older <a href="https://github.com/WebReflection/redefine#redefinejs">redefine.js</a> proposal, fitting in about 700bytes minzipped and solving in its core a lot of problems that older, as well as modern Desktop or Mobile browsers, introduced in these days web development.</p>
-
-<h3>
-<a name="prototypalclass" class="anchor" href="#prototypalclass"><span class="octicon octicon-link"></span></a>prototypal.Class</h3>
-
-<p>The <strong>API</strong> is straight forward, <code>Class({ .. properties .. })</code> or <code>Class(extend, { .. properties .. })</code>, where <code>extend</code> can be either <code>null</code>, any <code>object</code>, or simply a <code>Function</code> where in latter case its prototype will be automatically used to chain inheritance.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="c1">// a Null class example</span>
-<span class="kd">var</span> <span class="nx">Null</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{});</span>
-<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Null</span><span class="p">;</span>
-<span class="nx">n</span> <span class="k">instanceof</span> <span class="nb">Object</span><span class="p">;</span> <span class="c1">// false</span>
-
-<span class="c1">// a generic class example</span>
-<span class="kd">var</span> <span class="nx">Rectangle</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">({</span>
-
-  <span class="c1">// constructor</span>
-  <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">width</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">height</span><span class="p">;</span>
-  <span class="p">},</span>
-
-  <span class="c1">// some method</span>
-  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s1">'[object Rectangle]'</span><span class="p">;</span>
-  <span class="p">},</span>
-
-  <span class="c1">// default properties</span>
-  <span class="nx">width</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="nx">height</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-
-  <span class="c1">// a simple getter to retrieve the area</span>
-  <span class="nx">area</span><span class="o">:</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">descriptor</span><span class="p">({</span>
-    <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">})</span>
-<span class="p">});</span>
-
-<span class="c1">// a generic extend example</span>
-<span class="kd">var</span> <span class="nx">Square</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">(</span> <span class="nx">Rectangle</span><span class="p">,</span> <span class="p">{</span>
-  <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">Rectangle</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">size</span><span class="p">,</span> <span class="nx">size</span><span class="p">);</span>
-  <span class="p">},</span>
-  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s1">'[object Square]'</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-
-<span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Square</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-<span class="nx">s</span><span class="p">.</span><span class="nx">area</span><span class="p">;</span> <span class="c1">// 9</span>
-<span class="s1">''</span> <span class="o">+</span> <span class="nx">s</span><span class="p">;</span> <span class="c1">// [object Square]</span>
-</pre></div>
+<p>The initial <code>Class</code> module has been moved into <a href="./Class.md">this page</a></p>
 
 <h3>
-<a name="about-descriptors" class="anchor" href="#about-descriptors"><span class="octicon octicon-link"></span></a>About Descriptors</h3>
+<a name="prototypal-1" class="anchor" href="#prototypal-1"><span class="octicon octicon-link"></span></a>prototypal</h3>
 
-<p>By default, all properties are the same as those found in native JavaScript <em>classes</em></p>
-
-<div class="highlight highlight-javascript"><pre><span class="c1">// example of native descriptor</span>
-<span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span>
-  <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span>
-  <span class="s1">'toString'</span>
-<span class="p">);</span>
-
-<span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="o">:</span> <span class="nx">toString</span><span class="p">],</span>
-  <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-  <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
-</pre></div>
-
-<p>These settings avoid any sort of problems when it comes to inherited defaults, as well as overwritten methods.</p>
+<p>Right now, <code>prototypal.create()</code> is the only utility method available but it should work with <strong>every</strong> JavaScript engine, down to IE6.</p>
 
 <h4>
-<a name="classdescriptor--es5-descriptor--" class="anchor" href="#classdescriptor--es5-descriptor--"><span class="octicon octicon-link"></span></a>Class.descriptor({ .. ES5 descriptor .. })</h4>
+<a name="how" class="anchor" href="#how"><span class="octicon octicon-link"></span></a>How</h4>
 
-<p>In case any other descriptor is needed, the <code>Class</code> offers an easy way do define exactly the needed one:</p>
+<p><code>npm install prototypal</code> then <code>var create = require('prototypal').create</code></p>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">// based on previous example</span>
-<span class="kd">var</span> <span class="nx">Rectangle</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">({</span>
+<p>Same is for <code>bower install prototypal</code> AMD module, however needed files are:</p>
 
-  <span class="c1">// ... code as seen before ... </span>
+<ul>
+<li>
+<a href="build/prototypal.js">minified cross platform</a> for the <code>Class</code> variable only instead of a module</li>
+<li>
+<a href="build/prototypal.amd.js">AMD module</a> minified, for your AMD logic</li>
+<li>
+<a href="build/prototypal.node.js">node.js module</a> for node</li>
+</ul><h3>
+<a name="prototypalcreateextend-properties" class="anchor" href="#prototypalcreateextend-properties"><span class="octicon octicon-link"></span></a>prototypal.create(extend[, properties])</h3>
 
-  <span class="c1">// specifying a descriptor as</span>
-  <span class="c1">// enumerable: false</span>
-  <span class="c1">// configurable: false</span>
-  <span class="c1">// get: function () { ... }</span>
-  <span class="nx">area</span><span class="o">:</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">descriptor</span><span class="p">({</span>
-    <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">})</span>
+<p>The <strong>API</strong> is very similar to the one proposed in <a href="http://lodash.com/docs#create">lo-dash</a> <strong>except</strong> it promotes instead of copying over the <code>properties</code> object whenever is possible (for better performance)</p>
 
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="c1">// a null object example</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">create</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<h4>
-<a name="classlazycallback" class="anchor" href="#classlazycallback"><span class="octicon octicon-link"></span></a>Class.lazy(callback)</h4>
+<span class="c1">// a generic inherited example</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">testa</span><span class="o">:</span> <span class="mi">123</span>
+    <span class="p">},</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nx">create</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">testb</span><span class="o">:</span> <span class="mi">456</span>
+    <span class="p">});</span>
 
-<p><code>lazy</code> is useful to set a property once avoiding expensive computations or, as example, creating maybe not always needed extra objects, preserving performance, CPU, and allocated RAM.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">({</span>
-  <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">parents</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">parents</span> <span class="o">=</span> <span class="nx">parents</span><span class="p">;</span>
-  <span class="p">},</span>
-  <span class="c1">// here an example of ..</span>
-  <span class="c1">//   . something maybe not needed right on</span>
-  <span class="c1">//   . something not always accessed</span>
-  <span class="c1">//   . something expensive to compute</span>
-  <span class="c1">// once computed there is no need</span>
-  <span class="c1">// to compute it again so it should</span>
-  <span class="c1">// rather be a property than a method</span>
-  <span class="nx">genealogicTree</span><span class="o">:</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">lazy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">parents</span><span class="p">,</span>
-        <span class="nx">mom</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-        <span class="nx">dad</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-        <span class="nx">tree</span> <span class="o">=</span> <span class="p">{</span>
-          <span class="nx">mom</span><span class="o">:</span> <span class="p">[</span><span class="nx">mom</span><span class="p">],</span>
-          <span class="nx">dad</span><span class="o">:</span> <span class="p">[</span><span class="nx">dad</span><span class="p">]</span>
-        <span class="p">};</span>
-    <span class="nx">p</span> <span class="o">=</span> <span class="nx">mom</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">parents</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">tree</span><span class="p">.</span><span class="nx">mom</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
-        <span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">genealogicTree</span><span class="p">,</span>
-        <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">genealogicTree</span>
-      <span class="p">);</span>
-    <span class="p">}</span>
-    <span class="nx">p</span> <span class="o">=</span> <span class="nx">dad</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">parents</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">tree</span><span class="p">.</span><span class="nx">dad</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
-        <span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">genealogicTree</span><span class="p">,</span>
-        <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">genealogicTree</span>
-      <span class="p">);</span>
-    <span class="p">}</span>
-    <span class="c1">// returning the object that</span>
-    <span class="c1">// will be set as</span>
-    <span class="c1">// non writable</span>
-    <span class="c1">// but configurable</span>
-    <span class="k">return</span> <span class="nx">tree</span><span class="p">;</span>
-  <span class="p">})</span>
-<span class="p">});</span>
-</pre></div>
-
-<p>Being configurable, whenever there is a need to recalculate the property it's still possible to <code>delete me.genealogicTree</code> and retrieve it again.</p>
-
-<h4>
-<a name="classboundcallback" class="anchor" href="#classboundcallback"><span class="octicon octicon-link"></span></a>Class.bound(callback)</h4>
-
-<p>This is a simple internal <code>lazy</code> based hook able to automatically bind a method the very first time is accessed.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">MouseHandler</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">({</span>
-  <span class="nx">onClick</span><span class="o">:</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">bound</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">evt</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span> <span class="k">instanceof</span> <span class="nx">MouseHandler</span><span class="p">);</span> <span class="c1">// true</span>
-  <span class="p">})</span>
-<span class="p">});</span>
-
-<span class="kd">var</span> <span class="nx">mh</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MouseHandler</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="nx">mh</span><span class="p">.</span><span class="nx">onClick</span><span class="p">);</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">'testa'</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">'testa'</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">'testb'</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">testa</span><span class="p">;</span> <span class="c1">// 123</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">testb</span><span class="p">;</span> <span class="c1">// 456</span>
 </pre></div>
 
 <h3>
 <a name="compatibility" class="anchor" href="#compatibility"><span class="octicon octicon-link"></span></a>Compatibility</h3>
 
-<p>If your browser is not in this list, feel free to <a href="http://webreflection.github.io/prototypal/test/">test online</a> and verify it's green.</p>
-
-<p><strong>Browsers</strong></p>
-
-<ul>
-<li>Opera Desktop, Opera Mobile, and Opera Mini if using <a href="./test/es5.js">es5-shim and es5-sham</a> upfront</li>
-<li>WebKit Android 2+</li>
-<li>IE9 Desktop or Mobile and above</li>
-<li>Kindle Fire Silk</li>
-<li>webOS 2</li>
-<li>Firefox and Firefox Mobile or FirefoxOS</li>
-<li>Chrome</li>
-<li>Safari and Safari Mobile in iOS5+</li>
-<li>UC Browser</li>
-<li>Nokia Xpress (Asha and WP)</li>
-</ul><p><strong>Server</strong></p>
-
-<ul>
-<li>node.js, travis builds on 0.8 and higher, might work on 0.6 too</li>
-<li>need to tests nashorn but <code>wru</code> does not work there for some reason I haven't figure out yet</li>
-</ul>
+<p>You can <a href="http://webreflection.github.io/prototypal/test/">test online</a> and verify that <strong>even IE6 works</strong> as expected.</p>
         </section>
 
         <footer>
