@@ -1,7 +1,9 @@
-.PHONY: build var node amd size hint clean test web preview pages dependencies
+.PHONY: build var var-class node node-class amd amd-class size hint clean test web preview pages dependencies
 
 # repository name
 REPO = prototypal
+
+CLASS = src/Class.js
 
 # make var files
 VAR = src/$(REPO).js
@@ -21,6 +23,9 @@ build:
 	make var
 	make node
 	make amd
+	make var-class
+	make node-class
+	make amd-class
 	make test
 #	make hint
 	make size
@@ -35,10 +40,24 @@ var:
 	rm build/no-copy.$(REPO).max.js
 	rm build/no-copy.$(REPO).js
 
+
+var-class:
+	mkdir -p build
+	cat template/var-class.before $(CLASS) template/var-class.after >build/no-copy.$(REPO).max.js
+	node node_modules/uglify-js/bin/uglifyjs --verbose build/no-copy.$(REPO).max.js >build/no-copy.$(REPO).js
+	cat template/license.before LICENSE.txt template/license.after build/no-copy.$(REPO).max.js >build/Class.max.js
+	cat template/copyright build/no-copy.$(REPO).js >build/Class.js
+	rm build/no-copy.$(REPO).max.js
+	rm build/no-copy.$(REPO).js
+
 # build node.js version
 node:
 	mkdir -p build
 	cat template/license.before LICENSE.txt template/license.after template/node.before $(NODE) template/node.after >build/$(REPO).node.js
+
+node-class:
+	mkdir -p build
+	cat template/license.before LICENSE.txt template/license.after template/node-class.before $(CLASS) template/node-class.after >build/Class.node.js
 
 # build AMD version
 amd:
@@ -47,6 +66,15 @@ amd:
 	node node_modules/uglify-js/bin/uglifyjs --verbose build/no-copy.$(REPO).max.amd.js >build/no-copy.$(REPO).amd.js
 	cat template/license.before LICENSE.txt template/license.after build/no-copy.$(REPO).max.amd.js >build/$(REPO).max.amd.js
 	cat template/copyright build/no-copy.$(REPO).amd.js >build/$(REPO).amd.js
+	rm build/no-copy.$(REPO).max.amd.js
+	rm build/no-copy.$(REPO).amd.js
+
+amd-class:
+	mkdir -p build
+	cat template/amd-class.before $(CLASS) template/amd-class.after >build/no-copy.$(REPO).max.amd.js
+	node node_modules/uglify-js/bin/uglifyjs --verbose build/no-copy.$(REPO).max.amd.js >build/no-copy.$(REPO).amd.js
+	cat template/license.before LICENSE.txt template/license.after build/no-copy.$(REPO).max.amd.js >build/Class.max.amd.js
+	cat template/copyright build/no-copy.$(REPO).amd.js >build/Class.amd.js
 	rm build/no-copy.$(REPO).max.amd.js
 	rm build/no-copy.$(REPO).amd.js
 

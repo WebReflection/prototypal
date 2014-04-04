@@ -1,15 +1,13 @@
 {
-  "version": "0.1.2",
+  "version": "0.2.0",
   "license": "MIT",
   "name": "prototypal",
-  "description": "modern JS inheritance done right",
+  "description": "prototypal inheritance done right",
   "homepage": "https://github.com/WebReflection/prototypal",
   "keywords": [
+    "IE6", "IE7", "IE8",
     "prototypal",
     "inheritance",
-    "descriptors",
-    "ES5",
-    "ES5.1",
     "cross",
     "browser",
     "platform"
