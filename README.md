@@ -5,7 +5,11 @@ prototypal
 
 [Mit Style License](./LICENSE.txt)
 
-Right now, `prototypal.create()` is the only utility available but it should work with **every** JavaScript engine, down to IE6.
+##### Where is Class ?
+The initial `Class` module has been moved into [this page](./Class.md)
+
+### prototypal
+Right now, `prototypal.create()` is the only utility method available but it should work with **every** JavaScript engine, down to IE6.
 
 #### How
 `npm install prototypal` then `var create = require('prototypal').create`
@@ -17,7 +21,7 @@ Same is for `bower install prototypal` AMD module, however needed files are:
   * [node.js module](build/prototypal.node.js) for node
 
 ### prototypal.create(extend[, properties])
-The **API** is very similar to the one proposed in [lo-dash](http://lodash.com/docs#create) **except** for performance reason the second object will be promoted whenever is possible through `Object.setPrototypeOf` so it won't be reusable (nobody was going to reuse it anyway).
+The **API** is very similar to the one proposed in [lo-dash](http://lodash.com/docs#create) **except** it promotes instead of copying over the `properties` object whenever is possible (for better performance)
 ```javascript
 // a null object example
 var n = create(null);

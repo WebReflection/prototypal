@@ -7,9 +7,9 @@ It has been simplified as much as possible and it's a lightweight replacement fo
 
 #### Which File
 
-  * [minified cross platform](build/class.js) for the `Class` variable only instead of a module
-  * [AMD module](build/class.amd.js) minified, for your AMD logic
-  * [node.js module](build/class.node.js) for node
+  * [minified cross platform](build/Class.js) for the `Class` variable only instead of a module
+  * [AMD module](build/Class.amd.js) minified, for your AMD logic
+  * [node.js module](build/Class.node.js) for node
 
 ### prototypal.Class
 The **API** is straight forward, `Class({ .. properties .. })` or `Class(extend, { .. properties .. })`, where `extend` can be either `null`, any `object`, or simply a `Function` where in latter case its prototype will be automatically used to chain inheritance.
