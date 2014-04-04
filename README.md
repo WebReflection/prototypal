@@ -38,4 +38,4 @@ b.testb; // 456
 ```
 
 ### Compatibility
-You can [test online](http://webreflection.github.io/prototypal/test/) and verify that even IE6 works as expected.
+You can [test online](http://webreflection.github.io/prototypal/test/) and verify that **even IE6 works** as expected.
