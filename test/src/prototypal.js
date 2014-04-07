@@ -1,9 +1,10 @@
 function(Object){'use strict';
   // (C) Andrea Giammarchi
   var
+    CONSTRUCTOR = 'constructor',
     PROTOTYPE = 'prototype',
     inherited = [
-      'constructor',
+      CONSTRUCTOR,
       'hasOwnProperty',
       'isPrototypeOf',
       'propertyIsEnumerable',
@@ -66,20 +67,7 @@ function(Object){'use strict';
       {__proto__:null} instanceof Object ?
       // __proto__ does not work
       function (o, p) {
-        var r = create(p), k;
-        for (k in o) {
-          if (has.call(o, k)) {
-            r[k] = o[k];
-          }
-        }
-        if (enumerableBug) {
-          for (i = 0; i < inherited.length; i++) {
-            if (has.call(o, k = inherited[i])) {
-              r[k] = o[k];
-            }
-          }
-        }
-        return r;
+        return copyEnumerables(create(p), o);
       } :
       // proto does work
       function (o, p) {
@@ -88,7 +76,41 @@ function(Object){'use strict';
       }
     )
   ;
-  return function (p, o) {
-    return o == null ? create(p) : set(o, p);
+  function copyEnumerables(r, o) {
+    for (var k in o) {
+      if (has.call(o, k)) {
+        r[k] = o[k];
+      }
+    }
+    if (enumerableBug) {
+      for (i = 0; i < inherited.length; i++) {
+        if (has.call(o, k = inherited[i])) {
+          r[k] = o[k];
+        }
+      }
+    }
+    return r;
+  }
+  return {
+    Class: function (p, o) {
+      var
+        extending = o != null,
+        proto = extending ? o : p,
+        constructor = has.call(proto, CONSTRUCTOR) ?
+          proto[CONSTRUCTOR] :
+          (proto[CONSTRUCTOR] = function Class() {})
+      ;
+      return (constructor[PROTOTYPE] = extending ?
+        copyEnumerables(
+          create(
+            typeof p === 'function' ? p[PROTOTYPE] : p
+          ), o
+        ) :
+        proto
+      )[CONSTRUCTOR];
+    },
+    create: function (p, o) {
+      return o == null ? create(p) : set(o, p);
+    }
   };
 }(Object)

@@ -1,6 +1,10 @@
 //remove:
-var create = require('../build/prototypal.node.js').create;
+var prototypal = require('../build/prototypal.node.js');
 //:remove
+
+
+var create = prototypal.create,
+    Class = prototypal.Class;
 
 wru.test([
   {
@@ -56,6 +60,40 @@ wru.test([
       });
       wru.assert('directly inherited', b instanceof Object === false);
       wru.assert('directly extended', {}.hasOwnProperty.call(b, 'test') && b.test === 123);
+    }
+  }, {
+    name: 'Class basics',
+    test: function () {
+      var A = Class({test: 123, toString: function () {
+          return '[object A]';
+        }}),
+        a = new A;
+      wru.assert('there is a default constructor', a.constructor !== Object);
+      wru.assert('properties are there', a.test === 123);
+      wru.assert('toString is there too', a.toString() === '[object A]');
+    }
+  }, {
+    name: 'Class inheritance',
+    test: function () {
+      var
+        A = Class({test: 456, toString: function () {
+          return '[object A]';
+        }}),
+        B = Class(A, {
+          toString: function () {
+            return '[object ' + this.test + ']';
+          }
+        }),
+        b = new B;
+      wru.assert('there is a default constructor', b.constructor === B);
+      wru.assert('prototype inheritance', b instanceof A && b instanceof B);
+      wru.assert('methods override', b.toString() === '[object 456]');
+    }
+  }, {
+    name: 'null inheritance',
+    test: function () {
+      var Null = Class(null, {});
+      wru.assert('not inheriting Object', !(new Null instanceof Object));
     }
   }
 ]);
