@@ -3,8 +3,10 @@ var prototypal = require('../build/prototypal.node.js');
 //:remove
 
 
-var create = prototypal.create,
-    Class = prototypal.Class;
+var
+  create = prototypal.create,
+  Class = prototypal.Class
+;
 
 wru.test([
   {
