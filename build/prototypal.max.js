@@ -25,6 +25,7 @@ this.prototypal =function(Object){'use strict';
   var
     CONSTRUCTOR = 'constructor',
     PROTOTYPE = 'prototype',
+    DIRTY = '__proto__',
     inherited = [
       CONSTRUCTOR,
       'hasOwnProperty',
@@ -97,6 +98,7 @@ this.prototypal =function(Object){'use strict';
         return o;
       }
     )
+    // , unsafeDictionary = DIRTY in {} && DIRTY in create(null)
   ;
   function copyEnumerables(r, o) {
     for (var k in o) {
@@ -113,6 +115,7 @@ this.prototypal =function(Object){'use strict';
     }
     return r;
   }
+
   return {
     Class: function (p, o) {
       var
@@ -131,8 +134,25 @@ this.prototypal =function(Object){'use strict';
         proto
       )[CONSTRUCTOR];
     },
+    copy: copyEnumerables,
     create: function (p, o) {
       return o == null ? create(p) : set(o, p);
+    },
+    keys: Object.keys || function (o) {
+      var r = [], k;
+      for (k in o) {
+        if (has.call(o, k)) {
+          r.push(k);
+        }
+      }
+      if (enumerableBug) {
+        for (i = 0; i < inherited.length; i++) {
+          if (has.call(o, k = inherited[i])) {
+            r.push(k);
+          }
+        }
+      }
+      return r;
     }
   };
 }(Object);
