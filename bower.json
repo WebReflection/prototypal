@@ -1,7 +1,7 @@
 {
     "name": "prototypal",
     "description": "prototypal inheritance done right",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "main": "build/prototypal.amd.js",
     "ignore": [
         "test",

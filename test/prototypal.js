@@ -105,6 +105,13 @@ wru.test([
       var b = prototypal.copy({}, a);
       wru.assert('copies all the things', b.a === a.a && b.toString === a.toString);
     }
+  }, {
+    name: 'numeric properties without bug',
+    test: function () {
+      var o = create(Object.prototype);
+      o[1] = 1;
+      wru.assert(o.hasOwnProperty(1));
+    }
   }
 ]);
 

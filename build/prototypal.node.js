@@ -23,9 +23,11 @@ THE SOFTWARE.
 module.exports = function(Object){'use strict';
   // (C) Andrea Giammarchi
   var
+
     CONSTRUCTOR = 'constructor',
     PROTOTYPE = 'prototype',
     DIRTY = '__proto__',
+
     inherited = [
       CONSTRUCTOR,
       'hasOwnProperty',
@@ -36,55 +38,78 @@ module.exports = function(Object){'use strict';
       'valueOf'
     ],
     i = 0,
-    // hasOwnProperty shortcut
-    has = {}[inherited[1]],
+
     // IE only bug
     enumerableBug = !{valueOf:0}[inherited[3]](inherited[6]),
-    // native or concretely polyfilled with one argument only
-    // do not include other polyfills before this file
-    // or compatibility might be compromised
-    create = Object.create || (function(){
-      var
-        constructor = function () {},
-        proto = constructor[PROTOTYPE],
-        Null = function () {
-          var
-            win,
-            doc = document,
-            iframe = doc.createElement('iframe'),
-            parent = doc.body || doc.documentElement
-          ;
-          iframe.style.display = 'none';
-          parent.insertBefore(iframe, parent.firstChild);
-          iframe.src = 'javascript:';
-          win = iframe.contentWindow;
-          if (!win.Object) {
-            // hello IE6
-            doc = win.document;
-            doc.open();
-            doc.write('<script><' + '/script>');
-            doc.close();
+
+    // hasOwnProperty shortcut
+    has = {}[inherited[1]],
+
+    keys = Object.keys || function (o) {
+      var r = [], k;
+      for (k in o) {
+        if (has.call(o, k)) {
+          r.push(k);
+        }
+      }
+      if (enumerableBug) {
+        for (i = 0; i < inherited.length; i++) {
+          if (has.call(o, k = inherited[i])) {
+            r.push(k);
           }
-          Null = function () {};
-          Null[PROTOTYPE] = win.Object[PROTOTYPE];
-          parent.removeChild(iframe);
-          doc = parent = iframe = null;
-          for (i = 0; i < inherited.length; delete Null[PROTOTYPE][inherited[i++]]);
-          return new Null;
         }
-      ;
-      return function (p) {
-        var r;
-        if (p) {  // extending
-          constructor[PROTOTYPE] = p;
-          r = new constructor;
-          constructor[PROTOTYPE] = proto;
-        } else {  // null object
-          r = new Null;
-        }
-        return r;
-      };
-    }()),
+      }
+      return r;
+    },
+
+    originalCreate = Object.create,
+
+    create = originalCreate ?
+
+      // IE 9 and 10 native Object.create
+      // has a very weird enumerable bug
+      // @link http://javascript.ru/forum/307139-post39.html
+      (function (o) {
+        o[1] = 1;
+        return has.call(o, 1) ? originalCreate : chain;
+      }(originalCreate(Object[PROTOTYPE]))) :
+
+      // concretely polyfilled with one argument only
+      // do not include other polyfills before this file
+      // or compatibility might be compromised
+      (function(){
+        var
+          Null = function () {
+            var
+              win,
+              doc = document,
+              iframe = doc.createElement('iframe'),
+              parent = doc.body || doc.documentElement
+            ;
+            iframe.style.display = 'none';
+            parent.insertBefore(iframe, parent.firstChild);
+            iframe.src = 'javascript:';
+            win = iframe.contentWindow;
+            if (!win.Object) {
+              // hello IE6
+              doc = win.document;
+              doc.open();
+              doc.write('<script><' + '/script>');
+              doc.close();
+            }
+            Null = function () {};
+            Null[PROTOTYPE] = win.Object[PROTOTYPE];
+            parent.removeChild(iframe);
+            doc = parent = iframe = null;
+            for (i = 0; i < inherited.length; delete Null[PROTOTYPE][inherited[i++]]);
+            return new Null;
+          }
+        ;
+        return function (p) {
+          return p ? chain(p) : new Null;
+        };
+      }())
+    ,
     set = Object.setPrototypeOf || (
       // Opera Mini proof check
       {__proto__:null} instanceof Object ?
@@ -97,9 +122,20 @@ module.exports = function(Object){'use strict';
         o.__proto__ = p;
         return o;
       }
-    )
+    ),
+    constructorPrototype = constructor[PROTOTYPE]
     // , unsafeDictionary = DIRTY in {} && DIRTY in create(null)
   ;
+
+  function chain(p) {
+    constructor[PROTOTYPE] = p;
+    var r = new constructor;
+    constructor[PROTOTYPE] = constructorPrototype;
+    return r;
+  }
+
+  function constructor() {}
+
   function copyEnumerables(r, o) {
     for (var k in o) {
       if (has.call(o, k)) {
@@ -138,21 +174,6 @@ module.exports = function(Object){'use strict';
     create: function (p, o) {
       return o == null ? create(p) : set(o, p);
     },
-    keys: Object.keys || function (o) {
-      var r = [], k;
-      for (k in o) {
-        if (has.call(o, k)) {
-          r.push(k);
-        }
-      }
-      if (enumerableBug) {
-        for (i = 0; i < inherited.length; i++) {
-          if (has.call(o, k = inherited[i])) {
-            r.push(k);
-          }
-        }
-      }
-      return r;
-    }
+    keys: keys
   };
 }(Object);
