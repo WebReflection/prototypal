@@ -74,7 +74,7 @@ this.prototypal =function(Object){'use strict';
         if (has.call(o, 1)) return originalCreate;
         o = {'':{writable:true, configurable:true}};
         return function (p) {
-          return originalCreate(p, p ? {} : o);
+          return p ? chain(p) : originalCreate(p, o);
         };
       }(originalCreate(Object[PROTOTYPE]))) :
 
