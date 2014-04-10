@@ -49,8 +49,10 @@ function(Object){'use strict';
       // @link http://javascript.ru/forum/307139-post39.html
       (function (o) {
         o[1] = 1;
-        return has.call(o, 1) ? originalCreate : function (p) {
-          return p ? chain(p) : originalCreate(null);
+        if (has.call(o, 1)) return originalCreate;
+        o = {'':{writable:true, configurable:true}};
+        return function (p) {
+          return originalCreate(p, p ? {} : o);
         };
       }(originalCreate(Object[PROTOTYPE]))) :
 

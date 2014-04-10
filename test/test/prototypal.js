@@ -110,7 +110,10 @@ wru.test([
     test: function () {
       var o = create(Object.prototype);
       o[1] = 1;
-      wru.assert(o.hasOwnProperty(1));
+      wru.assert('Object.prototype', o.hasOwnProperty(1));
+      var o = create(null);
+      o[1] = 1;
+      wru.assert('null', Object.prototype.hasOwnProperty.call(o, 1));
     }
   }
 ]);
