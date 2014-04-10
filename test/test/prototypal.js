@@ -97,6 +97,21 @@ wru.test([
       var Null = Class(null, {});
       wru.assert('not inheriting Object', !(new Null instanceof Object));
     }
+  }, {
+    name: 'keys & copy',
+    test: function () {
+      var a = {a:123, toString: function () {}};
+      wru.assert('finds all keys', prototypal.keys(a).sort().join(',') === 'a,toString');
+      var b = prototypal.copy({}, a);
+      wru.assert('copies all the things', b.a === a.a && b.toString === a.toString);
+    }
+  }, {
+    name: 'numeric properties without bug',
+    test: function () {
+      var o = create(Object.prototype);
+      o[1] = 1;
+      wru.assert(o.hasOwnProperty(1));
+    }
   }
 ]);
 
