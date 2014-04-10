@@ -71,7 +71,9 @@ module.exports = function(Object){'use strict';
       // @link http://javascript.ru/forum/307139-post39.html
       (function (o) {
         o[1] = 1;
-        return has.call(o, 1) ? originalCreate : chain;
+        return has.call(o, 1) ? originalCreate : function (p) {
+          return p ? chain(p) : originalCreate(null);
+        };
       }(originalCreate(Object[PROTOTYPE]))) :
 
       // concretely polyfilled with one argument only
