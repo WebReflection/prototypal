@@ -111,9 +111,15 @@ wru.test([
       var o = create(Object.prototype);
       o[1] = 1;
       wru.assert('Object.prototype', o.hasOwnProperty(1));
+      var o = create(Object.prototype);
+      o[0] = 0;
+      wru.assert('Object.prototype zero', o.hasOwnProperty(0));
       var o = create(null);
       o[1] = 1;
       wru.assert('null', Object.prototype.hasOwnProperty.call(o, 1));
+      var o = create(null);
+      o[0] = 0;
+      wru.assert('null zero', Object.prototype.hasOwnProperty.call(o, 0));
     }
   }
 ]);
