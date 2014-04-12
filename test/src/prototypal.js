@@ -23,6 +23,8 @@ function(Object){'use strict';
     // hasOwnProperty shortcut
     has = {}[inherited[1]],
 
+    defineProperty = Object.defineProperty,
+
     keys = Object.keys || function (o) {
       var r = [], k;
       for (k in o) {
@@ -50,9 +52,11 @@ function(Object){'use strict';
       (function (o) {
         o[1] = 1;
         if (has.call(o, 1)) return originalCreate;
-        o = {'':{writable:true, configurable:true}};
+        o = {configurable:true};
         return function (p) {
-          return p ? chain(p) : originalCreate(p, o);
+          var r = originalCreate(p);
+          return has.call(r, 0) ?
+            r : delete defineProperty(r, 0, o)[0], r;
         };
       }(originalCreate(Object[PROTOTYPE]))) :
 
