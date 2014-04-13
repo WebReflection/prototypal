@@ -88,6 +88,26 @@ s.area(); // 9
 ### ES5 prototypal.Class(extend[, prototype])
 For JavaScript engines already compatible with ES5, the `Class` is the one proposed initially with `Class.lazy`, `Class.descriptor`, and `Class.bound`.
 
-### Compatibility
-Browser side, you can [test online](http://webreflection.github.io/prototypal/test/) and verify that **even IE6 works** as expected.
-Server side, nashorn, duktape, nodejs, and Rhino work as expected too, as well as any other JavaScript server side engine should.
+### General Compatibility
+Methods such `prototypal.copy()`, `prototypal.create()`, and `prototypal.keys()` are compatible with all JavaScript and JScript engines, down to Internet Explorer version 6, including **Opera Mini** and other server side based browsers.
+
+You can [test directly online](http://webreflection.github.io/prototypal/test/) if your browser is supported, including **IE6**.
+
+However, while `prototypal.Class` is tested everywhere too, in those browsers where ES5 is available it behaves in a more powerful way (so if these are your browsers targets, just use all extra features such `Class.lazy`, `Class.descriptor`, or `Class.bound`).
+
+All these platforms have been tested against the more powerful ES5 `Class` and its extra features:
+
+  * iOS 5.1 or greater
+  * Android 2.2 or greater
+  * webOS 2.2 or greater
+  * Kindle Fire Silk 3 or greater
+  * Windows Phone 7 (IE9 Mobile) or greater
+  * BlackBerry 10 or greater
+  * Nokia Asha 11 or greater
+  * FirefoxOS 1.0 or greater
+  * Desktop IE9, Chrome, Opera, Safari, Midori, others
+  * UC Browser
+
+On the server side, nashorn, duktape, nodejs, and Rhino work as expected too, as well as any other JavaScript server side engine probably should.
+
+If you find any platform that is not green please file a bug and/or let me know, thank you.
