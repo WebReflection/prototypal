@@ -6,7 +6,9 @@ prototypal
 [Mit Style License](./LICENSE.txt)
 
 ##### Where is Class ?
-The initial `Class` module has been moved into [this page](./Class.md)
+The initial `Class` module has been actually merged in this namespace where available.
+
+Right now you can find more info about `Class` on [this page](./Class.md)
 
 ### prototypal
 All utilities in this namespace should work with **every** JavaScript engine, down to IE6, Opera Mini, duktape, nodejs, and all others.
@@ -82,6 +84,9 @@ var s = new Square(3);
 s.area(); // 9
 '' + s;   // [object Square]
 ```
+
+### ES5 prototypal.Class(extend[, prototype])
+For JavaScript engines already compatible with ES5, the `Class` is the one proposed initially with `Class.lazy`, `Class.descriptor`, and `Class.bound`.
 
 ### Compatibility
 Browser side, you can [test online](http://webreflection.github.io/prototypal/test/) and verify that **even IE6 works** as expected.
