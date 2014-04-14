@@ -3,13 +3,7 @@ Class
 
 This is the result of a "_tour de force_" out of 4 blog posts about [ECMAScript 5 Descriptors](http://webreflection.blogspot.com/2014/03/what-books-wont-tell-you-about-es5.html) and probably the most compatible `Class` solution entirely based on ES5 Standards you can find these days.
 
-It has been simplified as much as possible and it's a lightweight replacement for an older [redefine.js](https://github.com/WebReflection/redefine#redefinejs) proposal, fitting in about 700bytes minzipped and solving in its core a lot of problems that older, as well as modern Desktop or Mobile browsers, introduced in these days web development.
-
-#### Which File
-
-  * [minified cross platform](build/Class.js) for the `Class` variable only instead of a module
-  * [AMD module](build/Class.amd.js) minified, for your AMD logic
-  * [node.js module](build/Class.node.js) for node
+It has been simplified as much as possible and it's a lightweight replacement for an older [redefine.js](https://github.com/WebReflection/redefine#redefinejs) proposal, solving in its core a lot of problems that older, as well as modern Desktop or Mobile browsers, introduced in these days web development.
 
 ### prototypal.Class
 The **API** is straight forward, `Class({ .. properties .. })` or `Class(extend, { .. properties .. })`, where `extend` can be either `null`, any `object`, or simply a `Function` where in latter case its prototype will be automatically used to chain inheritance.
@@ -177,7 +171,4 @@ If your browser is not in this list, feel free to [test online](http://webreflec
   * UC Browser
   * Nokia Xpress (Asha and WP)
 
-**Server**
-  * node.js, travis builds on 0.8 and higher, might work on 0.6 too
-  * need to tests nashorn but `wru` does not work there for some reason I haven't figure out yet
 

@@ -312,6 +312,27 @@ wru.test([
       wru.assert('getter works as expected',
         (new C).getter !== (new C).getter && /^0\.\d+$/.test((new C).getter));
     }
+  }, {
+    name: 'super shortcut',
+    test: function () {
+      var A = Class({
+        set: function (value) {
+          this.value = value;
+          return this.constructor;
+        }
+      });
+      var B = Class(A, function(parent) {
+        return {
+          set: function (value) {
+            return parent.set.call(this, value);
+          }
+        };
+      });
+      var o = new B;
+      wru.assert('is instanceof A', o instanceof A);
+      wru.assert('is instanceof B', o instanceof B);
+      wru.assert('invokes parent', o.set(123) === B && o.value === 123);
+    }
   }
 ] :
 []

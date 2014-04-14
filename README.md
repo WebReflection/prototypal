@@ -13,7 +13,7 @@ Right now you can find more info about `Class` on [this page](./Class.md)
 ### prototypal
 All utilities in this namespace should work with **every** JavaScript engine, down to IE6, Opera Mini, duktape, nodejs, and all others.
 
-#### How
+#### How / Which File
 `npm install prototypal` then `var create = require('prototypal').create`
 
 Same is for `bower install prototypal` AMD module, however needed files are:
@@ -21,6 +21,8 @@ Same is for `bower install prototypal` AMD module, however needed files are:
   * [minified cross platform](build/prototypal.js) for the `Class` variable only instead of a module
   * [AMD module](build/prototypal.amd.js) minified, for your AMD logic
   * [node.js module](build/prototypal.node.js) for node
+
+This package is registered in `bower` too.
 
 ### prototypal.create(extend[, properties])
 The **API** is very similar to the one proposed in [lo-dash](http://lodash.com/docs#create) **except** it promotes instead of copying over the `properties` object whenever is possible (for better performance)
@@ -85,6 +87,31 @@ s.area(); // 9
 '' + s;   // [object Square]
 ```
 
+#### prototypal.Class(extend[, function])
+If the second argument is a function, it will be invoked with the extended parent/super passed as argument.
+In such case, the function needs to return descriptors.
+```javascript
+var Rectangle = Class({
+  constructor: function (width, height) {
+    this.width = width;
+    this.height = height;
+  }
+});
+
+var Square = Class(Rectangle, function (parent) {
+  // a closure with fast and private parent/super access
+  // *must* return the descriptors object
+  return {
+    constructor: function (size) {
+      parent.constructor.call(
+        this, size, size
+      );
+    }
+  };
+});
+```
+
+
 ### ES5 prototypal.Class(extend[, prototype])
 For JavaScript engines already compatible with ES5, the `Class` is the one proposed initially with `Class.lazy`, `Class.descriptor`, and `Class.bound`.
 
@@ -103,7 +130,7 @@ All these platforms have been tested against the more powerful ES5 `Class` and i
   * Kindle Fire Silk 3 or greater
   * Windows Phone 7 (IE9 Mobile) or greater
   * BlackBerry 10 or greater
-  * Nokia Asha 11 or greater
+  * Nokia Xpress on WP and Asha 11 or greater
   * FirefoxOS 1.0 or greater
   * Desktop IE9, Chrome, Opera, Safari, Midori, others
   * UC Browser
