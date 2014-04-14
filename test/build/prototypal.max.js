@@ -228,6 +228,16 @@ this.prototypal =function(Object){'use strict';
       (d[CONSTRUCTOR] = process(function Class() {}));
   }
 
+  function getDescriptors(inheriting, descriptors) {
+    return typeof descriptors === 'function' ?
+      descriptors(inheriting) : descriptors;
+  }
+
+  function getExtend(proto) {
+    return typeof proto === 'function' ?
+      proto[PROTOTYPE] : proto;
+  }
+
   // simplified lazy assignment, i.e.
   // {method:Class.lazy(function(){
   //   // lazily assigned only once
@@ -287,39 +297,23 @@ this.prototypal =function(Object){'use strict';
     hasNotOwnPropertyBug = 1 === i; // < ... seriously !!!
   }
 
-  function Class(proto, descriptors) {
-    var
-      extending = descriptors != null,
-      d = extending ? descriptors : proto,
-      constructor = getConstructor(
-        d = keys(d).reduce(descriptify, d),
-        defaults
-      ).value
-    ;
-    return (extending ?
-      (constructor[PROTOTYPE] = originalCreate(
-        typeof proto === 'function' ?
-          proto[PROTOTYPE] : proto, d)) :
-      defineProperties(constructor[PROTOTYPE], d)
-    )[CONSTRUCTOR];
-  }
-
   return {
     Class: getOwnPropertyDescriptor ?
       defineProperties(
         function Class(proto, descriptors) {
           var
             extending = descriptors != null,
-            d = extending ? descriptors : proto,
+            inheriting = extending && getExtend(proto),
+            d = extending ?
+              getDescriptors(inheriting, descriptors) :
+              (proto || {}),
             constructor = getConstructor(
               d = keys(d).reduce(descriptify, d),
               defaults
             ).value
           ;
           return (extending ?
-            (constructor[PROTOTYPE] = originalCreate(
-              typeof proto === 'function' ?
-                proto[PROTOTYPE] : proto, d)) :
+            (constructor[PROTOTYPE] = originalCreate(inheriting, d)) :
             defineProperties(constructor[PROTOTYPE], d)
           )[CONSTRUCTOR];
         },
@@ -338,14 +332,14 @@ this.prototypal =function(Object){'use strict';
       function Class(proto, descriptors) {
         var
           extending = descriptors != null,
-          d = extending ? descriptors : proto,
+          inheriting = extending && getExtend(proto),
+          d = extending ?
+            getDescriptors(inheriting, descriptors) :
+            (proto || {}),
           constructor = getConstructor(d, Object)
         ;
         return (constructor[PROTOTYPE] = extending ?
-          copyEnumerables(create(
-            typeof proto === 'function' ?
-              proto[PROTOTYPE] : proto
-          ), d) : d
+          copyEnumerables(create(inheriting), d) : d
         )[CONSTRUCTOR];
       }
     ,

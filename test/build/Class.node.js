@@ -140,7 +140,7 @@ module.exports = function(Object){'use strict';
   function Class(proto, descriptors) {
     var d, extending = descriptors != null,
         d = keys(
-          d = extending ? descriptors : proto
+          d = extending ? descriptors : (proto || {})
         ).reduce(descriptify, d),
         constructor = (
           hasOwnProperty.call(d, CONSTRUCTOR) ?
