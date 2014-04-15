@@ -131,9 +131,11 @@ All these platforms have been tested against the more powerful ES5 `Class` and i
   * Windows Phone 7 (IE9 Mobile) or greater
   * BlackBerry 10 or greater
   * Nokia Xpress on WP and Asha 11 or greater
+  * Samsung Bada
+  * Opera Mini and Opera Mini J2ME
   * FirefoxOS 1.0 or greater
   * Desktop IE9, Chrome, Opera, Safari, Midori, others
-  * UC Browser
+  * UC Browser and UC Browser Mini
 
 On the server side, nashorn, duktape, nodejs, and Rhino work as expected too, as well as any other JavaScript server side engine probably should.
 
