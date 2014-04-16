@@ -1,4 +1,4 @@
-.PHONY: build var var-class node node-class amd amd-class size hint clean test web preview pages dependencies
+.PHONY: build duk var var-class node node-class amd amd-class size hint clean test web preview pages dependencies
 
 # repository name
 REPO = prototypal
@@ -27,8 +27,21 @@ build:
 	make node-class
 	make amd-class
 	make test
+	make duk
 #	make hint
 	make size
+
+# build self executable for duktape
+duk:
+	node -e 'var fs=require("fs");\
+          fs.writeFileSync(\
+            "test/duk.js",\
+            fs.readFileSync("node_modules/wru/build/wru.console.js") +\
+            "\n" +\
+            fs.readFileSync("build/$(REPO).js") +\
+            "\n" +\
+            fs.readFileSync("test/$(REPO).js").toString().replace(/^[^\x00]+?\/\/:remove\s*/,"")\
+          );'
 
 # build generic version
 var:
