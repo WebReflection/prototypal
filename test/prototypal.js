@@ -16,7 +16,8 @@ function compare(a, b) {
 
 var
   create = prototypal.create,
-  Class = prototypal.Class
+  Class = prototypal.Class,
+  Null = prototypal.Null
 ;
 
 wru.test([
@@ -332,6 +333,12 @@ wru.test([
       wru.assert('is instanceof A', o instanceof A);
       wru.assert('is instanceof B', o instanceof B);
       wru.assert('invokes parent', o.set(123) === B && o.value === 123);
+    }
+  }, {
+    name: 'Null',
+    test: function () {
+      var d = new Null;
+      wru.assert('not an Object', !(d instanceof Object));
     }
   }
 ] :
