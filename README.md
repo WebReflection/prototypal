@@ -5,11 +5,6 @@ prototypal
 
 [Mit Style License](./LICENSE.txt)
 
-##### Where is Class ?
-The initial `Class` module has been actually merged in this namespace where available.
-
-Right now you can find more info about `Class` on [this page](./Class.md)
-
 ### prototypal
 All utilities in this namespace should work with **every** JavaScript engine, down to IE6, Opera Mini, duktape, nodejs, and all others.
 
@@ -140,3 +135,9 @@ All these platforms have been tested against the more powerful ES5 `Class` and i
 On the server side, nashorn, duktape, nodejs, and Rhino work as expected too, as well as any other JavaScript server side engine probably should.
 
 If you find any platform that is not green please file a bug and/or let me know, thank you.
+
+
+##### Where is Class ?
+The initial `Class` module has been actually merged in this namespace where available.
+
+Right now you can find more info about `Class` on [this page](./Class.md)
