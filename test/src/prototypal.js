@@ -120,6 +120,7 @@ function(Object){'use strict';
     constructorPrototype = constructor[PROTOTYPE],
     hasConfigurableBug,
     hasNotOwnPropertyBug,
+    prototypal,
     tmp
     // , unsafeDictionary = DIRTY in {} && DIRTY in create(null)
   ;
@@ -275,7 +276,13 @@ function(Object){'use strict';
     hasNotOwnPropertyBug = 1 === i; // < ... seriously !!!
   }
 
-  return {
+  return (prototypal = {
+    Null: function Null() {
+      function Null() {}
+      Null.prototype = create(null);
+      prototypal.Null = Null;
+      return new Null;
+    },
     Class: getOwnPropertyDescriptor ?
       defineProperties(
         function Class(proto, descriptors) {
@@ -326,5 +333,5 @@ function(Object){'use strict';
       return o == null ? create(p) : set(o, p);
     },
     keys: keys
-  };
+  });
 }(Object)
